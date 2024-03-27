@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Polontex</string>
+    <string name="login">Login</string>
+    <string name="submit">Wyślij</string>
+    <string name="password">Hasło</string>
+    <string name="email">Email</string>
+    <string name="register">Rejestracja</string>
+    <string name="password2">Powtórz hasło</string>
+    <string name="click_to_login">Kliknij aby zalogować</string>
+    <string name="click_to_register">Kliknij aby zarejestrować</string>
+    <string name="logout">Wyloguj się</string>
+    <string name="home">Strona Główna</string>
+    <string name="report_problem">Zgłoś problem</string>
+    <string name="plan_a_visit">Zaplanuj wizytę</string>
+    <string name="history">Historia</string>
+    <string name="settings">Ustawienia</string>
+    <string name="open">Otwórz menu</string>
+    <string name="close">Zamknij menu</string>
+    <string name="name">Nazwa</string>
+</resources>
