@@ -1,5 +1,6 @@
 package com.polontex;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAdapter.ViewHolder> {
 
-    private ArrayList<History> history = new ArrayList<>();
+    private ArrayList<HistoryInfo> history = new ArrayList<>();
 
 
 
@@ -22,12 +23,13 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_list_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-
+        holder.txtHistory.setText(history.get(position).getName());
     }
 
     @Override
@@ -35,7 +37,7 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
         return history.size();
     }
 
-    public void setHistory(ArrayList<History> history) {
+    public void setHistory(ArrayList<HistoryInfo> history) {
         this.history = history;
         notifyDataSetChanged();
     }

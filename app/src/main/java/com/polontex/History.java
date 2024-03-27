@@ -12,9 +12,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class History extends AppCompatActivity {
 
@@ -72,6 +75,16 @@ public class History extends AppCompatActivity {
         });
 
         historyRecView = findViewById(R.id.historyRecView);
+
+        ArrayList<HistoryInfo> history = new ArrayList<>();
+
+        //TODO: add list of items from database
+
+        HistoryRecViewAdapter adapter = new HistoryRecViewAdapter();
+        adapter.setHistory(history);
+        historyRecView.setAdapter(adapter);
+
+        historyRecView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
