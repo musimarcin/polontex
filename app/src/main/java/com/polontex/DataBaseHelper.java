@@ -26,7 +26,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable =
-                "CREATE TABLE " + USERS + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + COLUMN_EMAIL + " TEXT NOT NULL, " + COLUMN_PASSWORD + " TEXT NOT NULL);";
+                "CREATE TABLE " + USERS + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + COLUMN_NAME + " TEXT NOT NULL, " + COLUMN_EMAIL + " TEXT NOT NULL, " + COLUMN_PASSWORD + " TEXT NOT NULL);";
 
         db.execSQL(createTable);
     }
@@ -36,16 +36,47 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void Register(String email, String password, String name) {
+    public void Register(String name, String email, String password) {
         String hashedpwd = PasswordManager.hashPassword(password);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
+        cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_EMAIL, email);
         cv.put(COLUMN_PASSWORD, hashedpwd);
-        cv.put(COLUMN_NAME, name);
+
 
         db.insert(USERS, null, cv);
+    }
+
+
+    public boolean UpdateName(String name, int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_NAME, name);
+        String[] selectionArgs = { String.valueOf(id) };
+
+        int rowsUpdated = db.update(USERS, cv, "id = ?", selectionArgs);
+
+        return rowsUpdated > 0;
+
+    }
+    public void UpdateEmail(String email, int id)
+    {
+
+    }
+    public void UpdatePassword(String password, int id)
+    {
+        String hashedpwd = PasswordManager.hashPassword(password);
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_PASSWORD, hashedpwd);
+        String[] selectionArgs = { String.valueOf(id) };
+
+        db.update(USERS, cv, "id = ?", selectionArgs);
     }
 
     public HashMap<String, String> getUsersDB() {
@@ -55,8 +86,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(q, null);
         if (cursor.moveToFirst()) {
             do {
-                String userEmail = cursor.getString(1);
-                String userPassword = cursor.getString(2);
+                String userEmail = cursor.getString(2);
+                String userPassword = cursor.getString(3);
                 queryResult.put(userEmail, userPassword);
             } while(cursor.moveToNext());
         }
@@ -73,7 +104,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 int userID = cursor.getInt(0);
-                String userEmail = cursor.getString(1);
+                String userEmail = cursor.getString(2);
                 emailsID.put(userEmail, userID);
             } while(cursor.moveToNext());
         }
@@ -90,7 +121,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 int userID = cursor.getInt(0);
-                String userName = cursor.getString(3);
+                String userName = cursor.getString(1);
                 namesID.put(userID, userName);
             } while(cursor.moveToNext());
         }

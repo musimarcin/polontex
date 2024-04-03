@@ -7,6 +7,7 @@ import android.view.*;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -25,7 +26,7 @@ public class Settings extends AppCompatActivity {
 
     Button btnName, btnEmail, btnPassword, btnNO, btnYES;
 
-    TextView popupText;
+    TextView popupText, newName, newEmail, newPassword;
 
 
     @Override
@@ -124,6 +125,9 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        Session session = new Session(Settings.this);
+        int userID = session.getSession();
+
         popupText = popupView.findViewById(R.id.popupText);
         btnNO = popupView.findViewById(R.id.btnNO);
         btnYES = popupView.findViewById(R.id.btnYES);
@@ -137,10 +141,17 @@ public class Settings extends AppCompatActivity {
 
         if (btnClicked == 1) {
             popupText.setText("Are you sure you want to change your Name?");
+            newName = findViewById(R.id.new_name);
+            String name = String.valueOf(newName.getText());
             btnYES.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    DataBaseHelper dataBaseHelper = new DataBaseHelper(Settings.this);
+                    if (!dataBaseHelper.UpdateName(name, userID)) {
+                        Toast.makeText(Settings.this, "Update failed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dataBaseHelper.UpdateName(name, userID);
+                    }
                 }
             });
         } else if (btnClicked == 2) {

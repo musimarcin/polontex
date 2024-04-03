@@ -39,8 +39,8 @@ public class Register extends AppCompatActivity {
                 password = String.valueOf(editTextPassword.getText());
                 password2 = String.valueOf(editTextPassword2.getText());
 
-                if (TextUtils.isEmpty(name)) {
-                    Toast.makeText(Register.this, "Enter name", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(name) || isUsername(name)) {
+                    Toast.makeText(Register.this, "Enter name or taken", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(email) || isUser(email)) {
                     Toast.makeText(Register.this, "Enter email or taken", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password)) {
@@ -49,7 +49,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Passwords does not match", Toast.LENGTH_SHORT).show();
                 } else {
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(Register.this);
-                    dataBaseHelper.Register(email, password, name);
+                    dataBaseHelper.Register(name, email, password);
                     Toast.makeText(Register.this, "Successfuly registered", Toast.LENGTH_SHORT).show();
                     moveToLogin();
                 }
@@ -69,6 +69,12 @@ public class Register extends AppCompatActivity {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(Register.this);
         HashMap<String,String> usersDB = dataBaseHelper.getUsersDB();
         return usersDB.containsKey(email);
+    }
+
+    private boolean isUsername(String name) {
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(Register.this);
+        HashMap<Integer,String> usersDB = dataBaseHelper.getUsersName();
+        return usersDB.containsValue(name);
     }
 
     private void moveToLogin() {
