@@ -3,7 +3,10 @@ package com.polontex;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.*;
+import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -19,6 +22,10 @@ public class Settings extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
+
+    Button btnName, btnEmail, btnPassword, btnNO, btnYES;
+
+    TextView popupText;
 
 
     @Override
@@ -62,14 +69,87 @@ public class Settings extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-
                 drawerLayout.closeDrawer(GravityCompat.START);
-
                 return false;
             }
         });
 
+        btnName = findViewById(R.id.btnName);
+        btnEmail = findViewById(R.id.btnEmail);
+        btnPassword = findViewById(R.id.btnPassword);
+
+        btnName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfirmationPopup(1);
+            }
+        });
+
+        btnEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfirmationPopup(2);
+            }
+        });
+
+        btnPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfirmationPopup(3);
+            }
+        });
+
+
     }
+
+    private void ConfirmationPopup(Integer btnClicked) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView;
+        if (btnClicked == 3) {
+            popupView = inflater.inflate(R.layout.popup_password, null);
+        } else {
+            popupView = inflater.inflate(R.layout.popup, null);
+
+        }
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        drawerLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(drawerLayout, Gravity.CENTER, 0, 0);
+
+            }
+        });
+
+        popupText = popupView.findViewById(R.id.popupText);
+        btnNO = popupView.findViewById(R.id.btnNO);
+        btnYES = popupView.findViewById(R.id.btnYES);
+
+        btnNO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        if (btnClicked == 1) {
+            popupText.setText("Are you sure you want to change your Name?");
+            btnYES.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        } else if (btnClicked == 2) {
+            popupText.setText("Are you sure you want to change your E-mail?");
+        }
+
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

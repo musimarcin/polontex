@@ -40,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
                     if (R.id.mainActivity == menuItem.getItemId()) {
-                        intent.setClassName(getApplicationContext(), "MainActivity");
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                        changeActivity("MainActivity");
                     }
                     if (R.id.report == menuItem.getItemId()) {
                         changeActivity("Report");
