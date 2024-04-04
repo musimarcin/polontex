@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void Register(String name, String email, String password) {
+    public boolean Register(String name, String email, String password) {
         String hashedpwd = PasswordManager.hashPassword(password);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -45,38 +46,50 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_EMAIL, email);
         cv.put(COLUMN_PASSWORD, hashedpwd);
 
-
-        db.insert(USERS, null, cv);
+        long rowsInserted = db.insert(USERS, null, cv);
+        db.close();
+        return rowsInserted > 0;
     }
 
 
-    public boolean UpdateName(String name, int id)
+    public boolean UpdateRow(String updateRow, int id, int button, String oldPassword)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-
-        cv.put(COLUMN_NAME, name);
-        String[] selectionArgs = { String.valueOf(id) };
-
-        int rowsUpdated = db.update(USERS, cv, "id = ?", selectionArgs);
-
+        int rowsUpdated;
+        String[] selectionArgs;
+        switch (button) {
+            case 1:
+                HashMap<Integer,String> namesDB = getUsersName();
+                if (!namesDB.containsValue(updateRow)) {
+                    cv.put(COLUMN_NAME, updateRow);
+                    break;
+                } else {
+                    return false;
+                }
+            case 2:
+                HashMap<String, Integer> emailsDB = getUsersID();
+                if (!emailsDB.containsKey(updateRow)) {
+                    cv.put(COLUMN_EMAIL, updateRow);
+                    break;
+                } else {
+                    return false;
+                }
+            case 3:
+                HashMap<Integer, String> passwordDB = getUsersPassword();
+                String checkpwd = passwordDB.get(id);
+                 if (PasswordManager.verifyPassword(oldPassword, checkpwd)) {
+                     String hashedpwd = PasswordManager.hashPassword(updateRow);
+                     cv.put(COLUMN_PASSWORD, hashedpwd);
+                     break;
+                 } else {
+                     return false;
+                 }
+        }
+        selectionArgs = new String[]{String.valueOf(id)};
+        SQLiteDatabase db = this.getWritableDatabase();
+        rowsUpdated = db.update(USERS, cv, "id = ?", selectionArgs);
+        db.close();
         return rowsUpdated > 0;
-
-    }
-    public void UpdateEmail(String email, int id)
-    {
-
-    }
-    public void UpdatePassword(String password, int id)
-    {
-        String hashedpwd = PasswordManager.hashPassword(password);
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-
-        cv.put(COLUMN_PASSWORD, hashedpwd);
-        String[] selectionArgs = { String.valueOf(id) };
-
-        db.update(USERS, cv, "id = ?", selectionArgs);
     }
 
     public HashMap<String, String> getUsersDB() {
@@ -128,5 +141,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return namesID;
+    }
+
+    public HashMap <Integer, String> getUsersPassword() {
+        HashMap <Integer, String> passwordID = new HashMap<>();
+        String q = "SELECT * FROM " + USERS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(q, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int userID = cursor.getInt(0);
+                String userName = cursor.getString(3);
+                passwordID.put(userID, userName);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return passwordID;
     }
 }

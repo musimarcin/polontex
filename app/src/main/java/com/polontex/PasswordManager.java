@@ -7,7 +7,6 @@ public class PasswordManager {
     }
 
     public static boolean verifyPassword(String password, String hashedPassword) {
-        // Verify the password against the hashed password
         return BCrypt.verifyer().verify(password.toCharArray(), hashedPassword).verified;
     }
 }

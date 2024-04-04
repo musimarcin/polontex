@@ -26,7 +26,7 @@ public class Settings extends AppCompatActivity {
 
     Button btnName, btnEmail, btnPassword, btnNO, btnYES;
 
-    TextView popupText, newName, newEmail, newPassword;
+    TextView popupText, newName, newEmail, newPassword, oldPassword;
 
 
     @Override
@@ -108,6 +108,7 @@ public class Settings extends AppCompatActivity {
         View popupView;
         if (btnClicked == 3) {
             popupView = inflater.inflate(R.layout.popup_password, null);
+            oldPassword = popupView.findViewById(R.id.popup_previous_password);
         } else {
             popupView = inflater.inflate(R.layout.popup, null);
 
@@ -138,26 +139,55 @@ public class Settings extends AppCompatActivity {
                 popupWindow.dismiss();
             }
         });
-
+        
+        String updateRow = null;
+        
         if (btnClicked == 1) {
             popupText.setText("Are you sure you want to change your Name?");
             newName = findViewById(R.id.new_name);
-            String name = String.valueOf(newName.getText());
-            btnYES.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DataBaseHelper dataBaseHelper = new DataBaseHelper(Settings.this);
-                    if (!dataBaseHelper.UpdateName(name, userID)) {
-                        Toast.makeText(Settings.this, "Update failed", Toast.LENGTH_SHORT).show();
-                    } else {
-                        dataBaseHelper.UpdateName(name, userID);
-                    }
-                }
-            });
+            updateRow = String.valueOf(newName.getText());
         } else if (btnClicked == 2) {
             popupText.setText("Are you sure you want to change your E-mail?");
+            newEmail = findViewById(R.id.new_email);
+            updateRow = String.valueOf(newEmail.getText());
+        } else if (btnClicked == 3) {
+            newPassword = findViewById(R.id.new_password);
+            updateRow = String.valueOf(newPassword.getText());
         }
 
+        String finalUpdateRow = updateRow;
+
+        btnYES.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String oldPasswordstr;
+                if (findViewById(R.id.popup_previous_password) == null) {
+                    oldPasswordstr = "";
+                } else {
+                    oldPasswordstr = String.valueOf(oldPassword.getText());
+                }
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(Settings.this);
+                if (!dataBaseHelper.UpdateRow(finalUpdateRow, userID, btnClicked, oldPasswordstr)) {
+                    Toast.makeText(Settings.this, "Update failed", Toast.LENGTH_SHORT).show();
+                    popupWindow.dismiss();
+                } else {
+                    dataBaseHelper.UpdateRow(finalUpdateRow, userID, btnClicked, oldPasswordstr);
+                    Toast.makeText(Settings.this, "Update succeed", Toast.LENGTH_SHORT).show();
+                    switch (btnClicked) {
+                        case 1:
+                            newName.setText("");
+                            break;
+                        case 2:
+                            newEmail.setText("");
+                            break;
+                        case 3:
+                            newPassword.setText("");
+                            break;
+                    }
+                    popupWindow.dismiss();
+                }
+            }
+        });
 
     }
 

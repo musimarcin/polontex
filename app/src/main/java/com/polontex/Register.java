@@ -49,9 +49,12 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Passwords does not match", Toast.LENGTH_SHORT).show();
                 } else {
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(Register.this);
-                    dataBaseHelper.Register(name, email, password);
-                    Toast.makeText(Register.this, "Successfuly registered", Toast.LENGTH_SHORT).show();
-                    moveToLogin();
+                    if (dataBaseHelper.Register(name, email, password)) {
+                        Toast.makeText(Register.this, "Successfuly registered", Toast.LENGTH_SHORT).show();
+                        moveToLogin();
+                    } else {
+                        Toast.makeText(Register.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
