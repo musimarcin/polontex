@@ -18,4 +18,21 @@
     <string name="open">Otwórz menu</string>
     <string name="close">Zamknij menu</string>
     <string name="name">Nazwa</string>
+    <string name="are_you_sure_you_want_to_change_your_e_mail">Czy na pewno chcesz zmienić E-mail?</string>
+    <string name="are_you_sure_you_want_to_change_your_name">Czy na pewno chcesz zmienić Nazwę?</string>
+    <string name="are_you_sure_you_want_to_change_your_password">Czy na pewno chcesz zmienić hasło?</string>
+    <string name="previous_password">Poprzednie hasło</string>
+    <string name="yes">TAK</string>
+    <string name="change_name">Zmień nazwę</string>
+    <string name="enter_a_new_name">Wprowadź nową nazwę</string>
+    <string name="change_e_mail">Zmień e-mail</string>
+    <string name="enter_a_new_e_mail">Wprowadź nowy e-mail</string>
+    <string name="change_password">Zmień hasło</string>
+    <string name="enter_a_new_password">Wprowadź nowe hasło</string>
+    <string name="no">NIE</string>
+    <string name="short_description_of_visit">Krótki opis powodu wizyty</string>
+    <string name="select_a_date_of_visit">Wybierz datę wizyty</string>
+    <string name="report_a_problem">Zgłoś problem</string>
+    <string name="enter_type_of_issue">Podaj rodzaj problemu</string>
+    <string name="describe_the_problem">Opisz problem</string>
 </resources>

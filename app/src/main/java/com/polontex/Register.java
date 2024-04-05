@@ -50,7 +50,7 @@ public class Register extends AppCompatActivity {
                 } else {
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(Register.this);
                     if (dataBaseHelper.Register(name, email, password)) {
-                        Toast.makeText(Register.this, "Successfuly registered", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, "Successfully registered", Toast.LENGTH_SHORT).show();
                         moveToLogin();
                     } else {
                         Toast.makeText(Register.this, "Something went wrong", Toast.LENGTH_SHORT).show();

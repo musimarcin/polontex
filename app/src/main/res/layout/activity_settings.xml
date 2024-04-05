@@ -18,7 +18,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Settings"
+                android:text="@string/settings"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +29,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change name"
+                android:text="@string/change_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
                 android:id="@+id/textView4"
@@ -43,13 +43,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="40dp"
                 android:id="@+id/new_name"
-                android:hint="Enter a new name"
+                android:hint="@string/enter_a_new_name"
                 android:minHeight="48dp"/>
 
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:id="@+id/btnName"
                 app:layout_constraintTop_toBottomOf="@+id/new_name"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change e-mail"
+                android:text="@string/change_e_mail"
                 app:layout_constraintTop_toBottomOf="@+id/btnName"
                 app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/textView5"
@@ -72,14 +72,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="40dp"
-                android:hint="Enter a new e-mail"
+                android:hint="@string/enter_a_new_e_mail"
                 android:id="@+id/new_email"
                 android:minHeight="48dp"/>
 
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:id="@+id/btnEmail"
                 app:layout_constraintTop_toBottomOf="@+id/new_email"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +89,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change password"
+                android:text="@string/change_password"
                 app:layout_constraintTop_toBottomOf="@+id/btnEmail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/new_password"/>
@@ -101,7 +101,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="40dp"
-                android:hint="Enter a new password"
+                android:hint="@string/enter_a_new_password"
                 android:id="@+id/new_password"
                 android:inputType="textPassword"
                 android:minHeight="48dp"/>
@@ -109,7 +109,7 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:id="@+id/btnPassword"
                 app:layout_constraintTop_toBottomOf="@+id/new_password"
                 app:layout_constraintStart_toStartOf="parent"

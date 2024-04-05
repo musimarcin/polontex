@@ -17,4 +17,21 @@
     <string name="open">Open Navigation Drawer</string>
     <string name="close">Close Navigation Drawer</string>
     <string name="name">Name</string>
+    <string name="are_you_sure_you_want_to_change_your_e_mail">Are you sure you want to change your E-mail?</string>
+    <string name="are_you_sure_you_want_to_change_your_name">Are you sure you want to change your Name?</string>
+    <string name="are_you_sure_you_want_to_change_your_password">Are you sure you want to change your password?</string>
+    <string name="previous_password">Previous password</string>
+    <string name="yes">YES</string>
+    <string name="change_name">Change name</string>
+    <string name="enter_a_new_name">Enter a new name</string>
+    <string name="change_e_mail">Change e-mail</string>
+    <string name="enter_a_new_e_mail">Enter a new e-mail</string>
+    <string name="change_password">Change password</string>
+    <string name="enter_a_new_password">Enter a new password</string>
+    <string name="no">NO</string>
+    <string name="short_description_of_visit">Short description of visit</string>
+    <string name="select_a_date_of_visit">Select a date of visit</string>
+    <string name="report_a_problem">Report a problem</string>
+    <string name="enter_type_of_issue">Enter type of issue</string>
+    <string name="describe_the_problem">Describe the problem</string>
 </resources>

@@ -19,6 +19,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_PASSWORD = "password";
+    public static final String HISTORY = "history";
+    public static final String COLUMN_USER_ID = "user_id";
+    public static final String COLUMN_ISSUE = "issue_type";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_ACTION = "action";
+    public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_TIMESTAMP = "timestamp";
+    public static final String VISITS = "visits";
+
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "polontex.db", null, 1);
@@ -27,9 +36,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable =
-                "CREATE TABLE " + USERS + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + COLUMN_NAME + " TEXT NOT NULL, " + COLUMN_EMAIL + " TEXT NOT NULL, " + COLUMN_PASSWORD + " TEXT NOT NULL);";
+                "CREATE TABLE " + USERS + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                    + COLUMN_NAME + " TEXT NOT NULL, "
+                    + COLUMN_EMAIL + " TEXT NOT NULL, "
+                    + COLUMN_PASSWORD + " TEXT NOT NULL);";
+        String createTable2 =
+                "CREATE TABLE " + HISTORY + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                    + COLUMN_USER_ID + " INTEGER NOT NULL, "
+                    + COLUMN_ISSUE + " TEXT NOT NULL, "
+                    + COLUMN_DESCRIPTION + " TEXT NOT NULL, "
+                    + COLUMN_ACTION + " TEXT NOT NULL, "
+                    + COLUMN_DATE + " TEXT NOT NULL, "
+                    + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY("
+                    + COLUMN_USER_ID + ") REFERENCES users(id));";
+        String createTable3 =
+                "CREATE TABLE " + VISITS + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                    + COLUMN_USER_ID + " INTEGER NOT NULL, "
+                    + COLUMN_ISSUE + " TEXT NOT NULL, "
+                    + COLUMN_DESCRIPTION + " TEXT NOT NULL, "
+                    + COLUMN_DATE + " TEXT NOT NULL, FOREIGN KEY("
+                    + COLUMN_USER_ID + ") REFERENCES users(id));";
 
         db.execSQL(createTable);
+        db.execSQL(createTable2);
+        db.execSQL(createTable3);
     }
 
     @Override
@@ -90,6 +120,42 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         rowsUpdated = db.update(USERS, cv, "id = ?", selectionArgs);
         db.close();
         return rowsUpdated > 0;
+    }
+
+    public boolean addVisit(int id, String description, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        //TODO: add timestamp and date format
+        cv.put(COLUMN_USER_ID, id);
+        cv.put(COLUMN_DESCRIPTION, description);
+        cv.put(COLUMN_DATE, date);
+
+        long rowsInserted = db.insert(VISITS, null, cv);
+        db.close();
+        return rowsInserted > 0;
+    }
+
+    public boolean addHistory(int id, String issue, String description, String action, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        //TODO: add timestamp and date format
+
+        cv.put(COLUMN_USER_ID, id);
+        cv.put(COLUMN_ISSUE, issue);
+        cv.put(COLUMN_DESCRIPTION, description);
+        cv.put(COLUMN_ACTION, action);
+        cv.put(COLUMN_DATE, date);
+
+        if (addVisit(id, description, date)) {
+            long rowsInserted = db.insert(HISTORY, null, cv);
+            db.close();
+            return rowsInserted > 0;
+        } else {
+            db.close();
+            return false;
+        }
     }
 
     public HashMap<String, String> getUsersDB() {

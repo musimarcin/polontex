@@ -143,11 +143,11 @@ public class Settings extends AppCompatActivity {
         String updateRow = null;
         
         if (btnClicked == 1) {
-            popupText.setText("Are you sure you want to change your Name?");
+            popupText.setText(R.string.are_you_sure_you_want_to_change_your_name);
             newName = findViewById(R.id.new_name);
             updateRow = String.valueOf(newName.getText());
         } else if (btnClicked == 2) {
-            popupText.setText("Are you sure you want to change your E-mail?");
+            popupText.setText(R.string.are_you_sure_you_want_to_change_your_e_mail);
             newEmail = findViewById(R.id.new_email);
             updateRow = String.valueOf(newEmail.getText());
         } else if (btnClicked == 3) {

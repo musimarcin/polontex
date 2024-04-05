@@ -21,7 +21,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Report a problem"
+                android:text="@string/report_a_problem"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enter type of issue"
+                android:text="@string/enter_type_of_issue"
                 app:layout_constraintBottom_toTopOf="@+id/report_type"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginBottom="12dp"/>
@@ -51,7 +51,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Describe the problem"
+                android:text="@string/describe_the_problem"
                 app:layout_constraintBottom_toTopOf="@+id/report_detail"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginBottom="12dp" />
@@ -66,7 +66,7 @@
                 android:layout_marginTop="40dp"
                 android:gravity="top"
                 android:scrollbars="vertical"
-                android:hint="Descripte the problem"/>
+                android:hint="@string/describe_the_problem"/>
 
         <Button
                 android:layout_width="wrap_content"
