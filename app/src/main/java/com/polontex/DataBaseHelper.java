@@ -21,10 +21,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PASSWORD = "password";
     public static final String HISTORY = "history";
     public static final String COLUMN_USER_ID = "user_id";
-    public static final String COLUMN_ISSUE = "issue_type";
+    public static final String COLUMN_ISSUE = "type";
     public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_ACTION = "action";
+    public static final String COLUMN_ACTION = "act";
     public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_TIME = "time";
     public static final String COLUMN_TIMESTAMP = "timestamp";
     public static final String VISITS = "visits";
 
@@ -39,11 +40,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + USERS + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
                     + COLUMN_NAME + " TEXT NOT NULL, "
                     + COLUMN_EMAIL + " TEXT NOT NULL, "
-                    + COLUMN_PASSWORD + " TEXT NOT NULL);";
+                    + COLUMN_PASSWORD + " TEXT NOT NULL, "
+                    + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP);";
         String createTable2 =
                 "CREATE TABLE " + HISTORY + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
                     + COLUMN_USER_ID + " INTEGER NOT NULL, "
-                    + COLUMN_ISSUE + " TEXT NOT NULL, "
+                    + COLUMN_ISSUE + " TEXT, "
                     + COLUMN_DESCRIPTION + " TEXT NOT NULL, "
                     + COLUMN_ACTION + " TEXT NOT NULL, "
                     + COLUMN_DATE + " TEXT NOT NULL, "
@@ -54,7 +56,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     + COLUMN_USER_ID + " INTEGER NOT NULL, "
                     + COLUMN_ISSUE + " TEXT NOT NULL, "
                     + COLUMN_DESCRIPTION + " TEXT NOT NULL, "
-                    + COLUMN_DATE + " TEXT NOT NULL, FOREIGN KEY("
+                    + COLUMN_DATE + " TEXT NOT NULL, "
+                    + COLUMN_TIME + " TEXT NOT NULL, FOREIGN KEY("
                     + COLUMN_USER_ID + ") REFERENCES users(id));";
 
         db.execSQL(createTable);
@@ -122,33 +125,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return rowsUpdated > 0;
     }
 
-    public boolean addVisit(int id, String description, String date) {
+    public boolean addVisit(int id, String type, String description, String date, String time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        //TODO: add timestamp and date format
         cv.put(COLUMN_USER_ID, id);
+        cv.put(COLUMN_ISSUE, type);
         cv.put(COLUMN_DESCRIPTION, description);
         cv.put(COLUMN_DATE, date);
+        cv.put(COLUMN_TIME, time);
 
         long rowsInserted = db.insert(VISITS, null, cv);
-        db.close();
         return rowsInserted > 0;
     }
 
-    public boolean addHistory(int id, String issue, String description, String action, String date) {
+    public boolean addHistory(int id, String issue, String description, String act, String date, String time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        //TODO: add timestamp and date format
+        String fullDate = date+" "+time;
 
         cv.put(COLUMN_USER_ID, id);
         cv.put(COLUMN_ISSUE, issue);
         cv.put(COLUMN_DESCRIPTION, description);
-        cv.put(COLUMN_ACTION, action);
-        cv.put(COLUMN_DATE, date);
+        cv.put(COLUMN_ACTION, act);
+        cv.put(COLUMN_DATE, fullDate);
 
-        if (addVisit(id, description, date)) {
+        if (addVisit(id, issue,description, date, time)) {
             long rowsInserted = db.insert(HISTORY, null, cv);
             db.close();
             return rowsInserted > 0;
@@ -156,6 +159,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             db.close();
             return false;
         }
+    }
+
+    public HashMap<Integer, String> getDate() {
+        HashMap <Integer, String> queryResult = new HashMap<>();
+        String q = "SELECT * FROM " + VISITS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(q, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Integer userID = cursor.getInt(1);
+                String time = cursor.getString(4) + " " + cursor.getString(5);
+                queryResult.put(userID, time);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return queryResult;
     }
 
     public HashMap<String, String> getUsersDB() {

@@ -35,4 +35,10 @@
     <string name="report_a_problem">Zgłoś problem</string>
     <string name="enter_type_of_issue">Podaj rodzaj problemu</string>
     <string name="describe_the_problem">Opisz problem</string>
+    <string name="describe_purpose_of_the_visit">Opisz powód wizyty</string>
+    <string name="select_a_date">Wybierz datę</string>
+    <string name="select_a_time">Wybierz godzinę</string>
+    <string name="date_selected">Wybrana data</string>
+    <string name="time_selected">Wybrana godzina</string>
+    <string name="type_of_problem">Rodzaj problemu</string>
 </resources>

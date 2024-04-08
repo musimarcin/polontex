@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.HashMap;
 import java.util.Objects;
 

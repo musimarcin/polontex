@@ -34,4 +34,10 @@
     <string name="report_a_problem">Report a problem</string>
     <string name="enter_type_of_issue">Enter type of issue</string>
     <string name="describe_the_problem">Describe the problem</string>
+    <string name="describe_purpose_of_the_visit">Describe purpose of the visit</string>
+    <string name="select_a_date">Select a date</string>
+    <string name="select_a_time">Select a time</string>
+    <string name="date_selected">Date selected:</string>
+    <string name="time_selected">Time selected:</string>
+    <string name="type_of_problem">Type of problem</string>
 </resources>
