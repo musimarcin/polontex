@@ -1,5 +1,6 @@
 package com.polontex;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,42 +13,46 @@ import java.util.ArrayList;
 
 public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAdapter.ViewHolder> {
 
-    private ArrayList<HistoryInfo> history = new ArrayList<>();
+    private Context context;
+    private ArrayList action, date, timestamp;
 
 
-
-    public HistoryRecViewAdapter() {
+    HistoryRecViewAdapter(Context context, ArrayList action, ArrayList date, ArrayList timestamp) {
+        this.context = context;
+        this.action = action;
+        this.date = date;
+        this.timestamp = timestamp;
     }
 
     @NonNull
-    @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_list_item, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.history_list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        holder.txtHistory.setText(history.get(position).getName());
+        holder.txtAction.setText(String.valueOf(action.get(position)));
+        holder.txtDate.setText(String.valueOf(date.get(position)));
+        holder.txtTimestamp.setText(String.valueOf(timestamp.get(position)).substring(0,16));
     }
 
     @Override
     public int getItemCount() {
-        return history.size();
+        return action.size();
     }
 
-    public void setHistory(ArrayList<HistoryInfo> history) {
-        this.history = history;
-        notifyDataSetChanged();
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtHistory;
+        TextView txtAction, txtDate, txtTimestamp;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            txtHistory = itemView.findViewById(R.id.txtHistory);
+            txtAction = itemView.findViewById(R.id.history_action);
+            txtDate = itemView.findViewById(R.id.history_date);
+            txtTimestamp = itemView.findViewById(R.id.history_timestamp);
         }
     }
 

@@ -2,9 +2,11 @@ package com.polontex;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -24,7 +26,11 @@ public class History extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
-    private RecyclerView historyRecView;
+    RecyclerView historyRecView;
+
+    DataBaseHelper dataBaseHelper;
+    ArrayList<String> action, date, timestamp;
+    HistoryRecViewAdapter historyRecViewAdapter;
 
 
     @Override
@@ -74,18 +80,34 @@ public class History extends AppCompatActivity {
             }
         });
 
+        Session session = new Session(History.this);
+        int userID = session.getSession();
+
+        dataBaseHelper = new DataBaseHelper(History.this);
+        action = new ArrayList<>();
+        date = new ArrayList<>();
+        timestamp = new ArrayList<>();
+
+        getHistoryData(userID);
+
         historyRecView = findViewById(R.id.historyRecView);
+        historyRecViewAdapter = new HistoryRecViewAdapter(History.this, action, date, timestamp);
+        historyRecView.setAdapter(historyRecViewAdapter);
+        historyRecView.setLayoutManager(new LinearLayoutManager(History.this));
 
-        ArrayList<HistoryInfo> history = new ArrayList<>();
+    }
 
-        //TODO: add list of items from database
-
-        HistoryRecViewAdapter adapter = new HistoryRecViewAdapter();
-        adapter.setHistory(history);
-        historyRecView.setAdapter(adapter);
-
-        historyRecView.setLayoutManager(new LinearLayoutManager(this));
-
+    void getHistoryData(int user_id) {
+        Cursor cursor = dataBaseHelper.getHistory(user_id);
+        if (cursor.getCount() == 0) {
+            Toast.makeText(History.this, "No history", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                action.add(cursor.getString(4));
+                date.add(cursor.getString(5));
+                timestamp.add(cursor.getString(6));
+            }
+        }
     }
 
     @Override

@@ -200,6 +200,7 @@ public class Plan extends AppCompatActivity {
         LocalDate parsedDate = LocalDate.parse(date);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime parsedTime = LocalTime.parse(time, formatter);
+        // TODO: fix greater date return false
         if ((parsedDate.getYear() > currentDate.getYear()) && (parsedDate.getMonthValue() > currentDate.getMonthValue()) && (parsedDate.getDayOfMonth() > currentDate.getDayOfMonth())) {
             return true;
         }

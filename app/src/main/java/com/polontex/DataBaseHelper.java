@@ -45,7 +45,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String createTable2 =
                 "CREATE TABLE " + HISTORY + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
                     + COLUMN_USER_ID + " INTEGER NOT NULL, "
-                    + COLUMN_ISSUE + " TEXT, "
+                    + COLUMN_ISSUE + " TEXT NOT NULL, "
                     + COLUMN_DESCRIPTION + " TEXT NOT NULL, "
                     + COLUMN_ACTION + " TEXT NOT NULL, "
                     + COLUMN_DATE + " TEXT NOT NULL, "
@@ -245,4 +245,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return passwordID;
     }
+
+    Cursor getHistory(int user_id) {
+        String q = "SELECT * FROM " + HISTORY + " WHERE id = ?";
+        String[] selectionArgs = {String.valueOf(user_id)};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        if (db != null) {
+            cursor = db.rawQuery(q, selectionArgs);
+        }
+        return  cursor;
+    }
+
 }
