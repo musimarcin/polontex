@@ -127,7 +127,7 @@ public class Plan extends AppCompatActivity {
                     Toast.makeText(Plan.this, "Visit on that time and date already exists", Toast.LENGTH_SHORT).show();
                 } else {
                     if (isValidDate(date, time)) {
-                        if (dataBaseHelper.addHistory(userID, tmp, desc, tmp, date, time)) {
+                        if (dataBaseHelper.addHistory(userID, tmp, desc, tmp, date, time) && dataBaseHelper.addVisit(userID, tmp, desc, date, time)) {
                             Toast.makeText(Plan.this, "Visit added", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(Plan.this, "Something went wrong", Toast.LENGTH_SHORT).show();

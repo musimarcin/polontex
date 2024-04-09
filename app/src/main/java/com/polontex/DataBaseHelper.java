@@ -21,7 +21,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PASSWORD = "password";
     public static final String HISTORY = "history";
     public static final String COLUMN_USER_ID = "user_id";
-    public static final String COLUMN_ISSUE = "type";
+    public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_ACTION = "act";
     public static final String COLUMN_DATE = "date";
@@ -45,7 +45,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String createTable2 =
                 "CREATE TABLE " + HISTORY + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
                     + COLUMN_USER_ID + " INTEGER NOT NULL, "
-                    + COLUMN_ISSUE + " TEXT NOT NULL, "
+                    + COLUMN_TYPE + " TEXT NOT NULL, "
                     + COLUMN_DESCRIPTION + " TEXT NOT NULL, "
                     + COLUMN_ACTION + " TEXT NOT NULL, "
                     + COLUMN_DATE + " TEXT NOT NULL, "
@@ -54,7 +54,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String createTable3 =
                 "CREATE TABLE " + VISITS + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
                     + COLUMN_USER_ID + " INTEGER NOT NULL, "
-                    + COLUMN_ISSUE + " TEXT NOT NULL, "
+                    + COLUMN_TYPE + " TEXT NOT NULL, "
                     + COLUMN_DESCRIPTION + " TEXT NOT NULL, "
                     + COLUMN_DATE + " TEXT NOT NULL, "
                     + COLUMN_TIME + " TEXT NOT NULL, FOREIGN KEY("
@@ -130,7 +130,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_USER_ID, id);
-        cv.put(COLUMN_ISSUE, type);
+        cv.put(COLUMN_TYPE, type);
         cv.put(COLUMN_DESCRIPTION, description);
         cv.put(COLUMN_DATE, date);
         cv.put(COLUMN_TIME, time);
@@ -139,26 +139,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return rowsInserted > 0;
     }
 
-    public boolean addHistory(int id, String issue, String description, String act, String date, String time) {
+    public boolean addHistory(int id, String type, String description, String act, String date, String time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         String fullDate = date+" "+time;
 
         cv.put(COLUMN_USER_ID, id);
-        cv.put(COLUMN_ISSUE, issue);
+        cv.put(COLUMN_TYPE, type);
         cv.put(COLUMN_DESCRIPTION, description);
         cv.put(COLUMN_ACTION, act);
         cv.put(COLUMN_DATE, fullDate);
 
-        if (addVisit(id, issue,description, date, time)) {
-            long rowsInserted = db.insert(HISTORY, null, cv);
-            db.close();
-            return rowsInserted > 0;
-        } else {
-            db.close();
-            return false;
-        }
+
+        long rowsInserted = db.insert(HISTORY, null, cv);
+        db.close();
+        return rowsInserted > 0;
     }
 
     public HashMap<Integer, String> getDate() {
