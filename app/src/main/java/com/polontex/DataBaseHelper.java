@@ -247,7 +247,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     Cursor getHistory(int user_id) {
-        String q = "SELECT * FROM " + HISTORY + " WHERE id = ?";
+        String q = "SELECT * FROM " + HISTORY + " WHERE user_id = ?";
         String[] selectionArgs = {String.valueOf(user_id)};
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
