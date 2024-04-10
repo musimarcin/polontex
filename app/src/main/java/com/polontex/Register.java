@@ -40,8 +40,8 @@ public class Register extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(name) || isUsername(name)) {
                     Toast.makeText(Register.this, "Enter name or taken", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(email) || isUser(email)) {
-                    Toast.makeText(Register.this, "Enter email or taken", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(email) || isUser(email) || !email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                    Toast.makeText(Register.this, "Enter email, taken or invalid", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password2) || !password.equals(password2)) {

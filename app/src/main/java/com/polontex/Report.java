@@ -42,6 +42,7 @@ public class Report extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_menu);
+        btnReport = findViewById(R.id.btnReport);
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(drawerToggle);
@@ -82,26 +83,25 @@ public class Report extends AppCompatActivity {
             }
         });
 
-        btnReport = findViewById(R.id.btnReport);
-        reportType = findViewById(R.id.report_type);
-        reportDesc = findViewById(R.id.report_detail);
-        String type = String.valueOf(reportType.getText());
-        String desc = String.valueOf(reportDesc.getText());
-
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(Report.this);
-        Session session = new Session(Report.this);
-        int userID = session.getSession();
-        String tmp = "report";
-        String date = currentDate.toString();
-        String time = currentTime.toString();
-
 
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(type)) { // TODO: not detecting text in input field
+
+                reportType = findViewById(R.id.report_type);
+                reportDesc = findViewById(R.id.report_detail);
+                String type = String.valueOf(reportType.getText());
+                String desc = String.valueOf(reportDesc.getText());
+
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(Report.this);
+                Session session = new Session(Report.this);
+                int userID = session.getSession();
+                String tmp = "report";
+                String date = currentDate.toString();
+                String time = currentTime.toString().substring(0,5);
+                if (TextUtils.isEmpty(type)) {
                     Toast.makeText(Report.this, "Select an issue type", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(desc)) {
+                } else if (TextUtils.isEmpty(desc) || desc.matches("\\s*")) {
                     Toast.makeText(Report.this, "Provide short description", Toast.LENGTH_SHORT).show();
                 } else {
                     if (dataBaseHelper.addHistory(userID, tmp, desc, tmp, date, time) && dataBaseHelper.addVisit(userID, type, desc, date, time)) {
