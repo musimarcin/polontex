@@ -31,7 +31,7 @@ xmlns:tools="http://schemas.android.com/tools"
                         <item
                         android:id="@+id/logout"
                         android:icon="@drawable/baseline_logout_24"
-                        android:title="Log out"/>
+                        android:title="@string/log_out"/>
                 </menu>
 
         </item>

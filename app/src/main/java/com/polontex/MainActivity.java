@@ -1,8 +1,12 @@
 package com.polontex;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
+    View header;
+
+    TextView headerUsername, headerEmail;
 
 
     @Override
@@ -24,18 +31,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_menu);
-
+        Session session = new Session(MainActivity.this);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         }
-        Intent intent = new Intent();
+        setHeaderUsername();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
@@ -55,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         changeActivity("Settings");
                     }
                     if (R.id.logout == menuItem.getItemId()) {
-                        Session session = new Session(MainActivity.this);
+
                         session.removeSession();
                         changeActivity("Login");
                         finish();
@@ -66,9 +73,26 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
+    public void setHeaderUsername() {
+        View header = getLayoutInflater().inflate(R.layout.header, null);
+        TextView headerUsername = header.findViewById(R.id.logged_name);
+        TextView headerEmail = header.findViewById(R.id.logged_email);
+        Session session = new Session(getApplicationContext());
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
+        Cursor cursor = dataBaseHelper.getUserNameEmail(session.getSession()); //TODO: bug
+        if (cursor.getCount() == 0) {
+            Toast.makeText(MainActivity.this, "No dates", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                String username = cursor.getString(0);
+                String email = cursor.getString(1);
+                headerUsername.setText(username);
+                headerEmail.setText(email);
+            }
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -76,11 +100,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onClickBtn(View v)
-    {
-        System.out.println("return of r id: ");
     }
 
     public void changeActivity(String className) {

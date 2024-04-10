@@ -40,4 +40,5 @@
     <string name="date_selected">Date selected:</string>
     <string name="time_selected">Time selected:</string>
     <string name="type_of_problem">Type of problem</string>
+    <string name="log_out">Log out</string>
 </resources>

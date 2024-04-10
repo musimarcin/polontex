@@ -41,4 +41,5 @@
     <string name="date_selected">Wybrana data</string>
     <string name="time_selected">Wybrana godzina</string>
     <string name="type_of_problem">Rodzaj problemu</string>
+    <string name="log_out">Wyloguj się</string>
 </resources>

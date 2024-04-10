@@ -157,21 +157,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return rowsInserted > 0;
     }
 
-    public HashMap<Integer, String> getDate() {
-        HashMap <Integer, String> queryResult = new HashMap<>();
-        String q = "SELECT * FROM " + VISITS;
+    Cursor getDate(Integer user_id) {
+        String q = "SELECT " + COLUMN_DATE + ", " + COLUMN_TIME + " FROM " + VISITS + " WHERE user_id = ?";
+        String[] selectionArgs = {String.valueOf(user_id)};
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(q, null);
-        if (cursor.moveToFirst()) {
-            do {
-                Integer userID = cursor.getInt(1);
-                String time = cursor.getString(4) + " " + cursor.getString(5);
-                queryResult.put(userID, time);
-            } while(cursor.moveToNext());
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(q, selectionArgs);
         }
-        cursor.close();
-        db.close();
-        return queryResult;
+        return cursor;
+    }
+
+    Cursor getUserNameEmail(Integer user_id) {
+        //String q = "SELECT " + COLUMN_NAME + ", " + COLUMN_EMAIL + " FROM " + USERS + " WHERE id = ?";
+        String q = "SELECT name, email FROM users WHERE id = 1";
+        String[] selectionArgs = {String.valueOf(user_id)};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(q, selectionArgs);
+        }
+        return cursor;
     }
 
     public HashMap<String, String> getUsersDB() {
@@ -233,8 +239,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 int userID = cursor.getInt(0);
-                String userName = cursor.getString(3);
-                passwordID.put(userID, userName);
+                String password = cursor.getString(3);
+                passwordID.put(userID, password);
             } while(cursor.moveToNext());
         }
         cursor.close();
@@ -251,7 +257,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (db != null) {
             cursor = db.rawQuery(q, selectionArgs);
         }
-        return  cursor;
+        return cursor;
     }
+
+
 
 }

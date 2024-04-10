@@ -4,6 +4,7 @@ package com.polontex;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import org.jetbrains.annotations.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -188,11 +190,22 @@ public class Plan extends AppCompatActivity {
         timeDialog.show();
     }
 
+
     private boolean isDate(Integer id, String date, String time) {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(Plan.this);
-        HashMap<Integer, String> dates = dataBaseHelper.getDate();
+        Cursor cursor = dataBaseHelper.getDate(id);
         String fulldate = date + " " + time;
-        return Objects.equals(dates.get(id), fulldate);
+        ArrayList<String> dbDates = new ArrayList<>();
+        if (cursor.getCount() == 0) {
+            Toast.makeText(Plan.this, "No dates", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                String cDate = cursor.getString(0);
+                String cTime = cursor.getString(1);
+                dbDates.add(cDate+" "+cTime);
+            }
+        }
+        return dbDates.contains(fulldate);
     }
 
 
