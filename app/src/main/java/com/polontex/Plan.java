@@ -53,7 +53,10 @@ public class Plan extends AppCompatActivity {
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        Intent intent = new Intent();
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(Plan.this);
+        Session session = new Session(Plan.this);
+        int userID = session.getSession();
+        dataBaseHelper.setHeaderUsername(userID, navigationView, dataBaseHelper);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
@@ -76,7 +79,6 @@ public class Plan extends AppCompatActivity {
                     Session session = new Session(Plan.this);
                     session.removeSession();
                     changeActivity("Login");
-                    startActivity(intent);
                     finish();
                 }
 
@@ -111,9 +113,6 @@ public class Plan extends AppCompatActivity {
         btnPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(Plan.this);
-                Session session = new Session(Plan.this);
-                int userID = session.getSession();
                 String desc = String.valueOf(visitDesc.getText());
                 String tmp = "visit";
                 String date = String.valueOf(txtDate.getText());

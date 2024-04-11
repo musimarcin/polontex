@@ -51,7 +51,10 @@ public class Report extends AppCompatActivity {
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        Intent intent = new Intent();
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(Report.this);
+        Session session = new Session(Report.this);
+        int userID = session.getSession();
+        dataBaseHelper.setHeaderUsername(userID, navigationView, dataBaseHelper);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
@@ -74,7 +77,6 @@ public class Report extends AppCompatActivity {
                     Session session = new Session(Report.this);
                     session.removeSession();
                     changeActivity("Login");
-                    startActivity(intent);
                     finish();
                 }
 
@@ -93,9 +95,6 @@ public class Report extends AppCompatActivity {
                 String type = String.valueOf(reportType.getText());
                 String desc = String.valueOf(reportDesc.getText());
 
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(Report.this);
-                Session session = new Session(Report.this);
-                int userID = session.getSession();
                 String tmp = "report";
                 String date = currentDate.toString();
                 String time = currentTime.toString().substring(0,5);

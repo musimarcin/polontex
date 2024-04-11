@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -169,15 +173,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     Cursor getUserNameEmail(Integer user_id) {
-        //String q = "SELECT " + COLUMN_NAME + ", " + COLUMN_EMAIL + " FROM " + USERS + " WHERE id = ?";
-        String q = "SELECT name, email FROM users WHERE id = 1";
-        String[] selectionArgs = {String.valueOf(user_id)};
+        String q = "SELECT " + COLUMN_NAME + ", " + COLUMN_EMAIL + " FROM " + USERS + " WHERE id = ?";
+        String[] selectionArgs = new String[]{String.valueOf(user_id)};
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(q, selectionArgs);
-        }
+        if (db != null) cursor = db.rawQuery(q, selectionArgs);
         return cursor;
+    }
+
+    public void setHeaderUsername(Integer user_id, NavigationView navigationView, DataBaseHelper dataBaseHelper) {
+        View header = navigationView.getHeaderView(0);
+        TextView headerUsername = header.findViewById(R.id.logged_name);
+        TextView headerEmail = header.findViewById(R.id.logged_email);
+        Cursor cursor = dataBaseHelper.getUserNameEmail(user_id);
+        while (cursor.moveToNext()) {
+            String username = cursor.getString(0);
+            String email = cursor.getString(1);
+            headerUsername.setText(username);
+            headerEmail.setText(email);
+        }
     }
 
     public HashMap<String, String> getUsersDB() {

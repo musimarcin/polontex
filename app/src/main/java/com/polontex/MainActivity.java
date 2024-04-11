@@ -2,6 +2,7 @@ package com.polontex;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -34,65 +35,48 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_menu);
         Session session = new Session(MainActivity.this);
+        int userID = session.getSession();
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         }
-        setHeaderUsername();
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
+        dataBaseHelper.setHeaderUsername(userID, navigationView, dataBaseHelper);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
-                    if (R.id.mainActivity == menuItem.getItemId()) {
-                        changeActivity("MainActivity");
-                    }
-                    if (R.id.report == menuItem.getItemId()) {
-                        changeActivity("Report");
-                    }
-                    if (R.id.plan == menuItem.getItemId()) {
-                        changeActivity("Plan");
-                    }
-                    if (R.id.history == menuItem.getItemId()) {
-                        changeActivity("History");
-                    }
-                    if (R.id.settings == menuItem.getItemId()) {
-                        changeActivity("Settings");
-                    }
-                    if (R.id.logout == menuItem.getItemId()) {
 
-                        session.removeSession();
-                        changeActivity("Login");
-                        finish();
-                    }
+                if (R.id.mainActivity == menuItem.getItemId()) {
+                    changeActivity("MainActivity");
+                }
+                if (R.id.report == menuItem.getItemId()) {
+                    changeActivity("Report");
+                }
+                if (R.id.plan == menuItem.getItemId()) {
+                    changeActivity("Plan");
+                }
+                if (R.id.history == menuItem.getItemId()) {
+                    changeActivity("History");
+                }
+                if (R.id.settings == menuItem.getItemId()) {
+                    changeActivity("Settings");
+                }
+                if (R.id.logout == menuItem.getItemId()) {
+                    session.removeSession();
+                    changeActivity("Login");
+                    finish();
+                }
 
-                    drawerLayout.closeDrawer(GravityCompat.START);
-
+                drawerLayout.closeDrawer(GravityCompat.START);
                 return false;
             }
         });
     }
 
-    public void setHeaderUsername() {
-        View header = getLayoutInflater().inflate(R.layout.header, null);
-        TextView headerUsername = header.findViewById(R.id.logged_name);
-        TextView headerEmail = header.findViewById(R.id.logged_email);
-        Session session = new Session(getApplicationContext());
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
-        Cursor cursor = dataBaseHelper.getUserNameEmail(session.getSession()); //TODO: bug
-        if (cursor.getCount() == 0) {
-            Toast.makeText(MainActivity.this, "No dates", Toast.LENGTH_SHORT).show();
-        } else {
-            while (cursor.moveToNext()) {
-                String username = cursor.getString(0);
-                String email = cursor.getString(1);
-                headerUsername.setText(username);
-                headerEmail.setText(email);
-            }
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

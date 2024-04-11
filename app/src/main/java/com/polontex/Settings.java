@@ -44,7 +44,9 @@ public class Settings extends AppCompatActivity {
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        Intent intent = new Intent();
+        Session session = new Session(Settings.this);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(Settings.this);
+        dataBaseHelper.setHeaderUsername(session.getSession(), navigationView, dataBaseHelper);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
@@ -67,7 +69,6 @@ public class Settings extends AppCompatActivity {
                     Session session = new Session(Settings.this);
                     session.removeSession();
                     changeActivity("Login");
-                    startActivity(intent);
                     finish();
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);

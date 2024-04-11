@@ -48,7 +48,6 @@ public class History extends AppCompatActivity {
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        Intent intent = new Intent();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
@@ -95,6 +94,8 @@ public class History extends AppCompatActivity {
         historyRecView.setAdapter(historyRecViewAdapter);
         historyRecView.setLayoutManager(new LinearLayoutManager(History.this));
 
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(History.this);
+        dataBaseHelper.setHeaderUsername(userID, navigationView, dataBaseHelper);
     }
 
     void getHistoryData(int user_id) {
