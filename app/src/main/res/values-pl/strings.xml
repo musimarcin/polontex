@@ -42,4 +42,8 @@
     <string name="time_selected">Wybrana godzina</string>
     <string name="type_of_problem">Rodzaj problemu</string>
     <string name="log_out">Wyloguj się</string>
+    <string name="action">Rodzaj</string>
+    <string name="date">Data</string>
+    <string name="timestamp">Znacznik czasu</string>
+    <string name="delete">Usuń</string>
 </resources>

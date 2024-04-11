@@ -57,35 +57,32 @@ public class Plan extends AppCompatActivity {
         Session session = new Session(Plan.this);
         int userID = session.getSession();
         dataBaseHelper.setHeaderUsername(userID, navigationView, dataBaseHelper);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
-                if (R.id.mainActivity == menuItem.getItemId()) {
-                    changeActivity("MainActivity");
-                }
-                if (R.id.report == menuItem.getItemId()) {
-                    changeActivity("Report");
-                }
-                if (R.id.plan == menuItem.getItemId()) {
-                    changeActivity("Plan");
-                }
-                if (R.id.history == menuItem.getItemId()) {
-                    changeActivity("History");
-                }
-                if (R.id.settings == menuItem.getItemId()) {
-                    changeActivity("Settings");
-                }
-                if (R.id.logout == menuItem.getItemId()) {
-                    Session session = new Session(Plan.this);
-                    session.removeSession();
-                    changeActivity("Login");
-                    finish();
-                }
-
-                drawerLayout.closeDrawer(GravityCompat.START);
-
-                return false;
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            if (R.id.mainActivity == menuItem.getItemId()) {
+                changeActivity("MainActivity");
             }
+            if (R.id.report == menuItem.getItemId()) {
+                changeActivity("Report");
+            }
+            if (R.id.plan == menuItem.getItemId()) {
+                changeActivity("Plan");
+            }
+            if (R.id.history == menuItem.getItemId()) {
+                changeActivity("History");
+            }
+            if (R.id.settings == menuItem.getItemId()) {
+                changeActivity("Settings");
+            }
+            if (R.id.logout == menuItem.getItemId()) {
+                Session session1 = new Session(Plan.this);
+                session1.removeSession();
+                changeActivity("Login");
+                finish();
+            }
+
+            drawerLayout.closeDrawer(GravityCompat.START);
+
+            return false;
         });
 
         txtDate = findViewById(R.id.dateSelected);

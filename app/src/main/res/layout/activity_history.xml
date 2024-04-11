@@ -29,7 +29,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Action"
+                        android:text="@string/action"
                         android:id="@+id/table_action"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +41,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date"
+                        android:text="@string/date"
                         android:id="@+id/table_date"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +54,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Timestamp"
+                        android:text="@string/timestamp"
                         android:id="@+id/table_timestamp"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"

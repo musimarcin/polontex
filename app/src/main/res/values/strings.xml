@@ -41,4 +41,8 @@
     <string name="time_selected">Time selected:</string>
     <string name="type_of_problem">Type of problem</string>
     <string name="log_out">Log out</string>
+    <string name="action">Action</string>
+    <string name="date">Date</string>
+    <string name="timestamp">Timestamp</string>
+    <string name="delete">Delete</string>
 </resources>
