@@ -13,15 +13,26 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
+    RecyclerView recyclerView;
+    ArrayList<String> action, date;
+    MainRecViewAdapter mainRecViewAdapter;
+    List<List<String>> buttonDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +78,35 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+        Cursor cursor = dataBaseHelper.getDate(userID);
+        action = new ArrayList<>();
+        date = new ArrayList<>();
+        buttonDataList = new ArrayList<>();
+
+        getVisitData(cursor);
+
+        recyclerView = findViewById(R.id.mainRecView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setAdapter(new MainRecViewAdapter(MainActivity.this, date, action, buttonDataList));
 
     }
 
+
+    void getVisitData(Cursor cursor) {
+        if (cursor.getCount() == 0) {
+            Toast.makeText(MainActivity.this, "No visits", Toast.LENGTH_SHORT).show();
+        } else {
+            int i = 0;
+            while (cursor.moveToNext()) {
+                String cDate = cursor.getString(0);
+                String cTime = cursor.getString(1);
+                action.add(cursor.getString(2));
+                date.add(cDate+" "+cTime);
+                buttonDataList.add(Arrays.asList(String.valueOf(i)));
+                i++;
+            }
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

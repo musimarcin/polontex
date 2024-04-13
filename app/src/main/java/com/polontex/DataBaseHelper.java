@@ -162,7 +162,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     Cursor getDate(Integer user_id) {
-        String q = "SELECT " + COLUMN_DATE + ", " + COLUMN_TIME + " FROM " + VISITS + " WHERE user_id = ?";
+        String q = "SELECT " + COLUMN_DATE + ", " + COLUMN_TIME + ", " + COLUMN_TYPE + " FROM " + VISITS + " WHERE user_id = ?";
         String[] selectionArgs = {String.valueOf(user_id)};
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;

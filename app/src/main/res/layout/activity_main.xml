@@ -57,7 +57,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/home_date"
-                        app:layout_constraintHorizontal_bias="0.073"
+                        app:layout_constraintHorizontal_bias="0.15"
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <TextView
@@ -90,6 +90,7 @@
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/mainRecView"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
                 android:layout_marginTop="116dp"/>
 
