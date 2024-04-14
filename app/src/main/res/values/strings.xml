@@ -73,4 +73,6 @@
     <string name="select_an_issue_type">Select an issue type</string>
     <string name="provide_short_description">Provide short description</string>
     <string name="issue_reported_successfully">Issue reported successfully</string>
+    <string name="no_descriptions">No descriptions</string>
+    <string name="report_exists">Report exists</string>
 </resources>

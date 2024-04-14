@@ -194,6 +194,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    Cursor getDescription(Integer user_id) {
+        String q = "SELECT " + COLUMN_DESCRIPTION + ", " + COLUMN_TYPE + " FROM " + VISITS + " WHERE user_id = ?";
+        String[] selectionArgs = new String[]{String.valueOf(user_id)};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) cursor = db.rawQuery(q, selectionArgs);
+        return cursor;
+    }
+
     public void setHeaderUsername(Integer user_id, NavigationView navigationView, DataBaseHelper dataBaseHelper) {
         View header = navigationView.getHeaderView(0);
         TextView headerUsername = header.findViewById(R.id.logged_name);

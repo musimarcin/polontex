@@ -74,4 +74,6 @@
     <string name="select_an_issue_type">Wybierz rodzaj problemu</string>
     <string name="provide_short_description">Wprowadź krótki opis</string>
     <string name="issue_reported_successfully">Problem zgłoszony</string>
+    <string name="no_descriptions">Brak opisów</string>
+    <string name="report_exists">Zgłoszenie istnieje</string>
 </resources>
