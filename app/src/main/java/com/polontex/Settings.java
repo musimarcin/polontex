@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
-import org.jetbrains.annotations.NotNull;
 
 public class Settings extends AppCompatActivity {
 
@@ -26,7 +25,7 @@ public class Settings extends AppCompatActivity {
 
     Button btnName, btnEmail, btnPassword, btnNO, btnYES;
 
-    TextView popupText, newName, newEmail, newPassword, oldPassword;
+    TextView popupText, newName, newEmail, newPassword, newPassword2, oldPassword;
 
 
     @Override
@@ -94,7 +93,13 @@ public class Settings extends AppCompatActivity {
         btnPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfirmationPopup(3);
+                newPassword = findViewById(R.id.new_password);
+                newPassword2 = findViewById(R.id.new_password2);
+                if (String.valueOf(newPassword.getText()).equals(String.valueOf(newPassword2.getText()))) {
+                    ConfirmationPopup(3);
+                } else {
+                    Toast.makeText(Settings.this, getString(R.string.passwords_doesn_t_match), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -141,13 +146,15 @@ public class Settings extends AppCompatActivity {
         String updateRow = null;
         
         if (btnClicked == 1) {
-            popupText.setText(R.string.are_you_sure_you_want_to_change_your_name);
             newName = findViewById(R.id.new_name);
             updateRow = String.valueOf(newName.getText());
+            String txt = getString(R.string.are_you_sure_you_want_to_change_your_name) + getString(R.string.to) + updateRow + "?";
+            popupText.setText(txt);
         } else if (btnClicked == 2) {
-            popupText.setText(R.string.are_you_sure_you_want_to_change_your_e_mail);
             newEmail = findViewById(R.id.new_email);
             updateRow = String.valueOf(newEmail.getText());
+            String txt = getString(R.string.are_you_sure_you_want_to_change_your_e_mail) + getString(R.string.to) + updateRow + "?";
+            popupText.setText(txt);
         } else if (btnClicked == 3) {
             newPassword = findViewById(R.id.new_password);
             updateRow = String.valueOf(newPassword.getText());
@@ -166,11 +173,11 @@ public class Settings extends AppCompatActivity {
                 }
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(Settings.this);
                 if (!dataBaseHelper.UpdateRow(finalUpdateRow, userID, btnClicked, oldPasswordstr)) {
-                    Toast.makeText(Settings.this, "Update failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Settings.this, getString(R.string.update_failed), Toast.LENGTH_SHORT).show();
                     popupWindow.dismiss();
                 } else {
                     dataBaseHelper.UpdateRow(finalUpdateRow, userID, btnClicked, oldPasswordstr);
-                    Toast.makeText(Settings.this, "Update succeed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Settings.this, getString(R.string.update_succeed), Toast.LENGTH_SHORT).show();
                     switch (btnClicked) {
                         case 1:
                             newName.setText("");
@@ -186,7 +193,6 @@ public class Settings extends AppCompatActivity {
                 }
             }
         });
-
     }
 
 

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> action, date;
     MainRecViewAdapter mainRecViewAdapter;
     List<List<String>> buttonDataList;
+    Button goPlan, goReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +91,28 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(new MainRecViewAdapter(MainActivity.this, date, action, buttonDataList));
 
+        goPlan = findViewById(R.id.goPlan);
+        goReport = findViewById(R.id.goReport);
+
+        goPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeActivity("Plan");
+            }
+        });
+
+        goReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeActivity("Report");
+            }
+        });
     }
 
 
     void getVisitData(Cursor cursor) {
         if (cursor.getCount() == 0) {
-            Toast.makeText(MainActivity.this, "No visits", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.no_visits, Toast.LENGTH_SHORT).show();
         } else {
             int i = 0;
             while (cursor.moveToNext()) {

@@ -98,7 +98,7 @@ public class History extends AppCompatActivity {
     void getHistoryData(int user_id) {
         Cursor cursor = dataBaseHelper.getHistory(user_id);
         if (cursor.getCount() == 0) {
-            Toast.makeText(History.this, "No history", Toast.LENGTH_SHORT).show();
+            Toast.makeText(History.this, R.string.no_history, Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
                 action.add(cursor.getString(4));

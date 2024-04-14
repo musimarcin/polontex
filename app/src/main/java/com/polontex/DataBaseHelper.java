@@ -140,6 +140,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_TIME, time);
 
         long rowsInserted = db.insert(VISITS, null, cv);
+        db.close();
         return rowsInserted > 0;
     }
 
@@ -159,6 +160,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         long rowsInserted = db.insert(HISTORY, null, cv);
         db.close();
         return rowsInserted > 0;
+    }
+
+    public boolean deleteEntry(int user_id, String action, String date)
+    {
+        String whereClause = "user_id = ? AND type = ? AND date = ? AND time = ?";
+        String[] splitDate = date.split(" ");
+        System.out.println("date0: " + splitDate[0] + " date1: " + splitDate[1]);
+        String[] selectionArgs = {String.valueOf(user_id), action, splitDate[0], splitDate[1]};
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete(VISITS, whereClause, selectionArgs);
+        db.close();
+        return rowsDeleted > 0;
     }
 
     Cursor getDate(Integer user_id) {

@@ -36,14 +36,14 @@ public class Login extends AppCompatActivity {
                 password = String.valueOf(editTextPassword.getText());
 
                 if (TextUtils.isEmpty(email) || !isUser(email) || !email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-                    Toast.makeText(Login.this, "Enter email or invalid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, R.string.enter_email_or_invalid, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, R.string.enter_password, Toast.LENGTH_SHORT).show();
                 } else {
                     if (login(email, password)) {
                         moveToMain();
                     } else {
-                        Toast.makeText(Login.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, R.string.incorrect_email_or_password, Toast.LENGTH_SHORT).show();
                     }
                 }
             }

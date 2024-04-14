@@ -96,14 +96,15 @@ public class Report extends AppCompatActivity {
                 String date = currentDate.toString();
                 String time = currentTime.toString().substring(0,5);
                 if (TextUtils.isEmpty(type)) {
-                    Toast.makeText(Report.this, "Select an issue type", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Report.this, R.string.select_an_issue_type, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(desc) || desc.matches("\\s*")) {
-                    Toast.makeText(Report.this, "Provide short description", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Report.this, R.string.provide_short_description, Toast.LENGTH_SHORT).show();
                 } else {
                     if (dataBaseHelper.addHistory(userID, tmp, desc, tmp, date, time) && dataBaseHelper.addVisit(userID, type, desc, date, time)) {
-                        Toast.makeText(Report.this, "Issue reported successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Report.this, R.string.issue_reported_successfully
+                                , Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(Report.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Report.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                     }
                 }
             }

@@ -116,22 +116,22 @@ public class Plan extends AppCompatActivity {
                 String time = String.valueOf(txtTime.getText());
 
                 if (TextUtils.isEmpty(desc)) {
-                    Toast.makeText(Plan.this, "Provide description of visit", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Plan.this, R.string.provide_description_of_visit, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(date)) {
-                    Toast.makeText(Plan.this, "Provide date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Plan.this, R.string.provide_date, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(time)) {
-                    Toast.makeText(Plan.this, "Provide time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Plan.this, R.string.provide_time, Toast.LENGTH_SHORT).show();
                 } else if (isDate(userID, date, time)) {
-                    Toast.makeText(Plan.this, "Visit on that time and date already exists", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Plan.this, R.string.visit_on_that_time_and_date_already_exists, Toast.LENGTH_SHORT).show();
                 } else {
                     if (isValidDate(date, time)) {
                         if (dataBaseHelper.addHistory(userID, tmp, desc, tmp, date, time) && dataBaseHelper.addVisit(userID, tmp, desc, date, time)) {
-                            Toast.makeText(Plan.this, "Visit added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Plan.this, R.string.visit_added, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(Plan.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Plan.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(Plan.this, "Invalid date. Cannot be in the past", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Plan.this, R.string.invalid_date_cannot_be_in_the_past, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -168,7 +168,7 @@ public class Plan extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String newhour = null;
-                if (hourOfDay < 9) {
+                if (hourOfDay < 10) {
                     newhour = "0" + String.valueOf(hourOfDay);
                 } else {
                     newhour = String.valueOf(hourOfDay);
@@ -193,7 +193,7 @@ public class Plan extends AppCompatActivity {
         String fulldate = date + " " + time;
         ArrayList<String> dbDates = new ArrayList<>();
         if (cursor.getCount() == 0) {
-            Toast.makeText(Plan.this, "No dates", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Plan.this, R.string.no_dates, Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
                 String cDate = cursor.getString(0);

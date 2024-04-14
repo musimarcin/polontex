@@ -106,12 +106,24 @@
                 android:inputType="textPassword"
                 android:minHeight="48dp"/>
 
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/new_password"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"
+                android:hint="@string/password2"
+                android:id="@+id/new_password2"
+                android:inputType="textPassword"
+                android:minHeight="48dp"/>
+
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/submit"
                 android:id="@+id/btnPassword"
-                app:layout_constraintTop_toBottomOf="@+id/new_password"
+                app:layout_constraintTop_toBottomOf="@+id/new_password2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="20dp"/>

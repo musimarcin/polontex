@@ -39,20 +39,20 @@ public class Register extends AppCompatActivity {
                 password2 = String.valueOf(editTextPassword2.getText());
 
                 if (TextUtils.isEmpty(name) || isUsername(name)) {
-                    Toast.makeText(Register.this, "Enter name or taken", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, R.string.enter_name_or_taken, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(email) || isUser(email) || !email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-                    Toast.makeText(Register.this, "Enter email, taken or invalid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, R.string.enter_email_taken_or_invalid, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, R.string.enter_password, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password2) || !password.equals(password2)) {
-                    Toast.makeText(Register.this, "Passwords does not match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, R.string.passwords_does_not_match, Toast.LENGTH_SHORT).show();
                 } else {
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(Register.this);
                     if (dataBaseHelper.Register(name, email, password)) {
-                        Toast.makeText(Register.this, "Successfully registered", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, R.string.successfully_registered, Toast.LENGTH_SHORT).show();
                         moveToLogin();
                     } else {
-                        Toast.makeText(Register.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
