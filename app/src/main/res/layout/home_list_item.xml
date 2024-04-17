@@ -9,7 +9,8 @@
 
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/homeCardView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -39,9 +40,19 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"/>
 
-
+<!--            <TextView android:layout_width="match_parent"-->
+<!--                      android:layout_height="wrap_content"-->
+<!--                      android:text="gowno"-->
+<!--                      android:id="@+id/gowno"-->
+<!--                      app:layout_constraintTop_toBottomOf="@id/home_list_date"-->
+<!--                      app:layout_constraintStart_toStartOf="parent"-->
+<!--                      app:layout_constraintEnd_toEndOf="parent"-->
+<!--                      android:gravity="center"-->
+<!--                      android:layout_marginTop="10dp"-->
+<!--            />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.cardview.widget.CardView>
 

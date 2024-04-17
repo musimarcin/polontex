@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
     RecyclerView recyclerView;
-    ArrayList<String> action, date;
+    ArrayList<String> action, date, descriptionList;
     MainRecViewAdapter mainRecViewAdapter;
     List<List<String>> buttonDataList;
     Button goPlan, goReport;
@@ -81,15 +81,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Cursor cursor = dataBaseHelper.getDate(userID);
+        Cursor cursorDesc = dataBaseHelper.getDescription(userID);
         action = new ArrayList<>();
         date = new ArrayList<>();
         buttonDataList = new ArrayList<>();
+        descriptionList = new ArrayList<>();
 
         getVisitData(cursor);
+        getDescriptionData(cursorDesc);
 
         recyclerView = findViewById(R.id.mainRecView);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(new MainRecViewAdapter(MainActivity.this, date, action, buttonDataList));
+        recyclerView.setAdapter(new MainRecViewAdapter(MainActivity.this, date, action, buttonDataList, descriptionList));
 
         goPlan = findViewById(R.id.goPlan);
         goReport = findViewById(R.id.goReport);
@@ -122,6 +125,17 @@ public class MainActivity extends AppCompatActivity {
                 date.add(cDate+" "+cTime);
                 buttonDataList.add(Arrays.asList(String.valueOf(i)));
                 i++;
+            }
+        }
+    }
+
+    void getDescriptionData(Cursor cursor) {
+        if (cursor.getCount() == 0) {
+            Toast.makeText(MainActivity.this, R.string.no_descriptions, Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                String description = cursor.getString(0);
+                descriptionList.add(description);
             }
         }
     }
